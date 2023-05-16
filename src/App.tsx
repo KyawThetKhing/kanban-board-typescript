@@ -1,29 +1,22 @@
-import { Box, ThemeProvider } from "@mui/system";
-import { RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
+import { CssBaseline } from "@mui/material";
+import { RouterProvider } from "react-router-dom";
 
 //local imports
-import Topbar from "components/Topbar/Topbar";
-import { useMode, ColorModeContext } from "./theme";
-import { router } from "./routes";
+import { CustomThemeProvider } from "./theme";
 import store from "redux/store";
+import { router } from "./routes";
 import "./App.css";
 
 function App() {
-  const [theme, colorMode] = useMode();
   return (
-    <Provider store={store}>
-      {/*@ts-ignore */}
-      <ColorModeContext.Provider value={colorMode}>
+    <CustomThemeProvider>
+      <Provider store={store}>
         {/*@ts-ignore */}
-        <ThemeProvider theme={theme}>
-          <Box>
-            <Topbar />
-            <RouterProvider router={router} />
-          </Box>
-        </ThemeProvider>
-      </ColorModeContext.Provider>
-    </Provider>
+        <CssBaseline />
+        <RouterProvider router={router} />
+      </Provider>
+    </CustomThemeProvider>
   );
 }
 

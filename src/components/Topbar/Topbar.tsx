@@ -18,14 +18,13 @@ import {
   Notifications,
   More,
 } from "@mui/icons-material";
-import { Link } from "react-router-dom";
 
 //local imports
 import { Search, SearchIconWrapper, StyledInputBase } from "./Topbar.styles";
-import { ColorModeContext } from "./../../theme";
+// import { ColorModeContext } from "./../../theme";
 
 export default function Topbar() {
-  const colorMode = React.useContext(ColorModeContext);
+  // const colorMode = React.useContext(ColorModeContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -126,7 +125,10 @@ export default function Topbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "primary.main" }}>
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: "background.default", color: "text.primary" }}
+      >
         <Toolbar>
           <IconButton
             size="large"
@@ -141,7 +143,7 @@ export default function Topbar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: "none", sm: "block" }, color: "text.primary" }}
           >
             MUI
           </Typography>
@@ -158,12 +160,6 @@ export default function Topbar() {
           <Box
             sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
           >
-            <Switch
-              defaultChecked
-              color="default"
-              onChange={colorMode.toggleColorMode}
-              inputProps={{ "aria-label": "controlled" }}
-            />
             <IconButton
               size="large"
               aria-label="show 4 new mails"

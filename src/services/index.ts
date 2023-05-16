@@ -28,7 +28,6 @@ export const defaultHeaders = {};
 // });
 
 api.interceptors.response.use((response: any) => {
-  console.log("Response", response);
   if (response.data.statusCode < 200 || response.data.statusCode >= 300)
     throw new Error(response.data.message);
   return response;
