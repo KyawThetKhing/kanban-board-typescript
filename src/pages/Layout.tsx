@@ -10,13 +10,12 @@ const Layout = () => {
   return (
     <Grid
       container
-      spacing={2}
       sx={{
         width: "100vw",
         height: "100vh",
       }}
     >
-      <Grid xs={2}>
+      <Grid xs={2} sx={{ backgroundColor: "red" }}>
         <Sidebar />
       </Grid>
       <Grid xs={10}>

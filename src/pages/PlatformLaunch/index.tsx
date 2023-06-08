@@ -1,7 +1,14 @@
 import React from "react";
 
+import ProgressList from "components/ProgressList";
+import { PlaformLaunchContainer } from "./PlatformLaunch.styles";
+
 const PlatformLaunch = () => {
-  return <div>PlatformLaunch Page</div>;
+  return (
+    <PlaformLaunchContainer>
+      <ProgressList />
+    </PlaformLaunchContainer>
+  );
 };
 
 export default PlatformLaunch;

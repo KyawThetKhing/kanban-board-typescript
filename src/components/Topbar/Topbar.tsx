@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import {
@@ -8,7 +8,11 @@ import {
   Badge,
   MenuItem,
   Menu,
-  Switch,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -16,21 +20,42 @@ import {
   AccountCircle,
   Mail,
   Notifications,
-  More,
 } from "@mui/icons-material";
 
 //local imports
-import { Search, SearchIconWrapper, StyledInputBase } from "./Topbar.styles";
-// import { ColorModeContext } from "./../../theme";
+import {
+  Search,
+  SearchIconWrapper,
+  StyledInputBase,
+  ContentContainer,
+} from "./Topbar.styles";
+import addNewTaskFormSchema from "schema/addNewTaskFormSchema";
+import { AddTaskForm } from "../AddTaskForm/AddTaskForm";
 
 export default function Topbar() {
-  // const colorMode = React.useContext(ColorModeContext);
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    React.useState<null | HTMLElement>(null);
+    useState<null | HTMLElement>(null);
+
+  const [open, setOpen] = useState<boolean>(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const initialValues = {
+    title: "",
+    description: "",
+    subtasks: [],
+    status: "",
+  };
+
+  const onSubmit = (values: any, submitProps: any) => {
+    // handleCalculateCost(values.route);
+    submitProps.setSubmitting(false);
+    submitProps.resetForm();
+  };
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -160,52 +185,28 @@ export default function Topbar() {
           <Box
             sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
           >
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
+            <Button
+              onClick={handleOpen}
+              variant="contained"
+              color="primary"
+              sx={{
+                borderRadius: "20px",
+              }}
             >
-              <Badge badgeContent={4} color="error">
-                <Mail />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
-              <Badge badgeContent={17} color="error">
-                <Notifications />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <More />
-            </IconButton>
+              + Add New Task
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+
+      {/**Add Task Modal */}
+      <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
+        <DialogContent>
+          <AddTaskForm />
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }

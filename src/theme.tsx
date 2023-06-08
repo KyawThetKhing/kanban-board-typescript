@@ -30,8 +30,8 @@ export const darkTheme = {
       main: customColors.blackOne,
     },
     background: {
-      default: customColors.blackTwo,
-      paper: customColors.blackThree,
+      default: customColors.blackFour,
+      paper: customColors.blackTwo,
     },
     action: {
       active: customColors.purpleOne,
@@ -57,7 +57,7 @@ export const lightTheme = {
     },
     background: {
       default: customColors.white,
-      paper: customColors.grayThree,
+      paper: customColors.grayTwo,
     },
     action: {
       active: customColors.purpleOne,
@@ -65,7 +65,7 @@ export const lightTheme = {
       focus: customColors.purpleTwo,
     },
     text: {
-      primary: customColors.grayOne,
+      primary: customColors.blackOne,
       secondary: customColors.grayOne,
       disabled: customColors.grayThree,
     },

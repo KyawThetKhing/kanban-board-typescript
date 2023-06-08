@@ -1,5 +1,6 @@
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
+import { Box } from "@mui/material";
 
 export const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -39,4 +40,11 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: "20ch",
     },
   },
+}));
+
+// Modal CSS Start Here
+export const ContentContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
 }));

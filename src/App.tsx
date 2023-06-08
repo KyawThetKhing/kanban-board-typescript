@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-import { CssBaseline } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
 import { RouterProvider } from "react-router-dom";
 
 //local imports
@@ -11,9 +11,8 @@ import "./App.css";
 function App() {
   return (
     <CustomThemeProvider>
+      <CssBaseline />
       <Provider store={store}>
-        {/*@ts-ignore */}
-        <CssBaseline />
         <RouterProvider router={router} />
       </Provider>
     </CustomThemeProvider>
