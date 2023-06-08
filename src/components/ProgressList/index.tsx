@@ -23,9 +23,7 @@ const colorMap: ColorMap = {
 
 const ProgressList = () => {
   const { kanbanId } = useParams();
-  console.log("Kanban Id", kanbanId);
   const columns = useSelector(selectColumnsByBoardId(kanbanId || ""));
-  console.log("Columns", columns);
   // const tasks = useSelector(selectColumnsByBoardId(1));
 
   // const [progressList, setProgressList] = useState<string[]>([
@@ -41,8 +39,8 @@ const ProgressList = () => {
   return (
     <ProgressListContainer>
       {columns.map((column: any) => (
-        <Box>
-          <Progress key={column.id}>
+        <Box key={column.id}>
+          <Progress>
             <ColorCircle
               circleColor={colorMap[column.title.toLowerCase()] || "#EA5555"}
             ></ColorCircle>

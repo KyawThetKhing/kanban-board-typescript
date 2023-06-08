@@ -37,3 +37,9 @@ export const selectTasksByColumnId = (columnId: string) =>
       return column.tasks.map((taskId: string) => tasks[taskId]);
     }
   );
+
+//Get task detail by taskId
+export const selectTaskByTaskId = (taskId: string) =>
+  createSelector([(state: any) => state.kanban.tasks.byId], (tasks) => {
+    return tasks[taskId];
+  });

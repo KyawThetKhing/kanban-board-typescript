@@ -50,7 +50,7 @@ const Sidebar = () => {
         <RouteTitle>All Board(3)</RouteTitle>
         <ListContainer>
           {kanbanBoards.map((kanban: any) => (
-            <List>
+            <List key={kanban.id}>
               <NavLink
                 to={`kanban/${kanban.id}`}
                 style={({ isActive }) => {

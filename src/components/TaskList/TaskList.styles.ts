@@ -15,4 +15,5 @@ export const TaskWrapper = styled(Box)(({ theme }) => ({
   boxShadow: theme.shadows[1],
   backgroundColor: theme.palette.background.default,
   cursor: "pointer",
+  position: "relative",
 }));

@@ -3,7 +3,7 @@ import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import { Box } from "@mui/material";
 
 import Sidebar from "components/Sidebar";
-import Topbar from "components/Topbar/Topbar";
+import Topbar from "components/Topbar";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {

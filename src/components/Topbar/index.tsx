@@ -9,9 +9,7 @@ import {
   MenuItem,
   Menu,
   Dialog,
-  DialogTitle,
   DialogContent,
-  DialogActions,
   Button,
 } from "@mui/material";
 import {
@@ -30,9 +28,9 @@ import {
   ContentContainer,
 } from "./Topbar.styles";
 import addNewTaskFormSchema from "schema/addNewTaskFormSchema";
-import { AddTaskForm } from "../AddTaskForm/AddTaskForm";
+import { AddTaskForm } from "../AddTaskForm";
 
-export default function Topbar() {
+const Topbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     useState<null | HTMLElement>(null);
@@ -204,9 +202,11 @@ export default function Topbar() {
       {/**Add Task Modal */}
       <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
         <DialogContent>
-          <AddTaskForm />
+          <AddTaskForm handleClose={handleClose} />
         </DialogContent>
       </Dialog>
     </Box>
   );
-}
+};
+
+export default Topbar;

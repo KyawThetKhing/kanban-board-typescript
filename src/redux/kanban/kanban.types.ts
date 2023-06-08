@@ -1,34 +1,38 @@
 export interface ITask {
-  id: number;
+  id: string;
   title: string;
   description: string;
-  subtasks: string[];
+  subtasks: ISubTask[];
   status: string;
 }
 
+export interface ISubTask {
+  name: string;
+}
+
 export interface IColumn {
-  id: number;
+  id: string;
   title: string;
-  tasks: number[];
+  tasks: string[];
 }
 
 export interface IKanbanBoard {
-  id: number;
+  id: string;
   title: string;
-  columns: number[];
+  columns: string[];
 }
 
 export interface IKanbanState {
   kanbanBoards: {
     byId: Record<string, IKanbanBoard>;
-    allIds: number[];
+    allIds: string[];
   };
   columns: {
     byId: Record<string, IColumn>;
-    allIds: number[];
+    allIds: string[];
   };
   tasks: {
     byId: Record<string, ITask>;
-    allIds: number[];
+    allIds: string[];
   };
 }

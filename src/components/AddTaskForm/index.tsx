@@ -1,11 +1,21 @@
+import { useEffect } from "react";
 import { TextField, Box, MenuItem, Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useForm, useFieldArray } from "react-hook-form";
+import { DevTool } from "@hookform/devtools";
 import { yupResolver } from "@hookform/resolvers/yup";
 import CloseIcon from "@mui/icons-material/Close";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 //local imports
 import addNewTaskFormSchema from "schema/addNewTaskFormSchema";
+import { addTask, editTask } from "redux/kanban/kanbanSlice";
+import {
+  selectColumnsByBoardId,
+  selectTaskByTaskId,
+} from "redux/kanban/kanbanSelectors";
 
 type FormValues = {
   title: string;
@@ -16,23 +26,33 @@ type FormValues = {
   status: string;
 };
 
-export const AddTaskForm = () => {
+const initailValues = {
+  title: "",
+  description: "",
+  subtasks: [
+    {
+      name: "",
+    },
+  ],
+  status: "",
+};
+
+export const AddTaskForm = ({
+  handleClose,
+  taskId,
+}: {
+  handleClose: () => void;
+  taskId?: string;
+}) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
     control,
+    reset,
+    setValue,
   } = useForm<FormValues>({
-    defaultValues: {
-      title: "",
-      description: "",
-      subtasks: [
-        {
-          name: "",
-        },
-      ],
-      status: "",
-    },
+    defaultValues: initailValues,
     resolver: yupResolver(addNewTaskFormSchema),
     mode: "onTouched",
   });
@@ -40,13 +60,55 @@ export const AddTaskForm = () => {
     name: "subtasks",
     control,
   });
+  const dispatch = useDispatch();
+  const { kanbanId } = useParams();
+
+  const columns = useSelector(selectColumnsByBoardId(kanbanId ? kanbanId : ""));
+  const taskDetail = useSelector(selectTaskByTaskId(taskId ? taskId : ""));
+
+  useEffect(() => {
+    if (taskId && taskDetail) {
+      console.log("Task Detail", taskDetail);
+      setValue("title", taskDetail.title);
+      setValue("description", taskDetail.description);
+      setValue("status", taskDetail.status);
+      setValue("title", taskDetail.title);
+      setValue("subtasks", taskDetail.subtasks);
+    }
+  }, [taskId, taskDetail]);
 
   const onSubmit = (data: FormValues) => {
-    console.log("On Submit", data);
+    console.log("Form Data", data);
+    const column = columns.filter(
+      (column: any) => column.title === data.status
+    );
+    console.log("Column", column);
+    const id = taskId ? taskDetail.id : "task-" + uuidv4();
+    const payload = {
+      columnId: column[0].id,
+      task: {
+        id: id,
+        title: data.title,
+        description: data.description,
+        subtasks: data.subtasks,
+        status: data.status,
+      },
+    };
+
+    console.log("Payload Data", payload);
+    if (taskId) {
+      dispatch(editTask(payload));
+    } else {
+      dispatch(addTask(payload));
+    }
+    reset(initailValues);
+    handleClose();
   };
+
+  console.log("Task Id", taskId);
   return (
     <Stack spacing={2}>
-      <h4>Add New Task</h4>
+      <h4>{taskId ? "Edit Task" : "Add New Task"}</h4>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <Stack spacing={3}>
           <Box>
@@ -101,6 +163,7 @@ export const AddTaskForm = () => {
                   variant="outlined"
                   placeholder="eg.Make Coffee"
                   {...register(`subtasks.${index}.name` as const)}
+                  defaultValue={field.name}
                 />
                 <Box onClick={() => remove(index)} sx={{ cursor: "pointer" }}>
                   <CloseIcon />
@@ -129,14 +192,13 @@ export const AddTaskForm = () => {
               fullWidth
               hiddenLabel
               variant="outlined"
-              defaultValue="Todo"
               {...register("status")}
               error={!!errors.status}
               helperText={errors.status?.message}
             >
-              {["Todo", "InProgress", "Code Review", "Done"].map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
+              {columns.map((column: any) => (
+                <MenuItem key={column.id} value={column.title}>
+                  {column.title}
                 </MenuItem>
               ))}
             </TextField>
@@ -152,6 +214,8 @@ export const AddTaskForm = () => {
           </Button>
         </Stack>
       </form>
+
+      <DevTool control={control} />
     </Stack>
   );
 };
