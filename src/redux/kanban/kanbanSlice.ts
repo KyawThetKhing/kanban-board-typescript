@@ -196,9 +196,22 @@ const kanbanSlice = createSlice({
       const { task } = action.payload;
       state.tasks.byId[task.id] = task;
     },
+    deleteTask: (state, action) => {
+      console.log("Action Payload", action.payload);
+      const id = action.payload;
+      //delete task from task List
+      delete state.tasks.byId[id];
+
+      //delete task Id from all Ids
+      state.tasks.allIds = state.tasks.allIds.filter((taskId) => taskId !== id);
+      //delte taskid from column tasks
+      Object.values(state.columns.byId).forEach((column) => {
+        column.tasks = column.tasks.filter((taskId) => taskId !== id);
+      });
+    },
   },
 });
 
-export const { addKanbanBoard, addColumn, addTask, editTask } =
+export const { addKanbanBoard, addColumn, addTask, editTask, deleteTask } =
   kanbanSlice.actions;
 export default kanbanSlice.reducer;

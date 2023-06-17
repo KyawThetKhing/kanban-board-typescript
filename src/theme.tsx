@@ -2,7 +2,6 @@ import { createContext, useState, useMemo, useContext } from "react";
 
 import { ThemeProvider } from "@mui/system";
 import { createTheme, Theme } from "@mui/material";
-
 type Mode = "dark" | "light";
 
 export const customColors = {
@@ -29,6 +28,9 @@ export const darkTheme = {
     secondary: {
       main: customColors.blackOne,
     },
+    error: {
+      main: customColors.redOne,
+    },
     background: {
       default: customColors.blackFour,
       paper: customColors.blackTwo,
@@ -43,6 +45,18 @@ export const darkTheme = {
       secondary: customColors.grayOne,
       disabled: customColors.grayThree,
     },
+    custom: {
+      button: customColors.white,
+    },
+  },
+  components: {
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: customColors.blackTwo,
+        },
+      },
+    },
   },
 };
 
@@ -54,6 +68,9 @@ export const lightTheme = {
     },
     secondary: {
       main: customColors.grayTwo,
+    },
+    error: {
+      main: customColors.redOne,
     },
     background: {
       default: customColors.white,
@@ -68,6 +85,19 @@ export const lightTheme = {
       primary: customColors.blackOne,
       secondary: customColors.grayOne,
       disabled: customColors.grayThree,
+    },
+    custom: {
+      button: customColors.grayThree,
+    },
+  },
+  components: {
+    //this is the way to override style to specific components globally
+    MuiDailog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: "red",
+        },
+      },
     },
   },
 };

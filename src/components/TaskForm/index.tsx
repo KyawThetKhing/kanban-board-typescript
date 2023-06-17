@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 //local imports
-import addNewTaskFormSchema from "schema/addNewTaskFormSchema";
+import taskFormSchema from "schema/taskFormSchema";
 import { addTask, editTask } from "redux/kanban/kanbanSlice";
 import {
   selectColumnsByBoardId,
@@ -53,7 +53,7 @@ export const AddTaskForm = ({
     setValue,
   } = useForm<FormValues>({
     defaultValues: initailValues,
-    resolver: yupResolver(addNewTaskFormSchema),
+    resolver: yupResolver(taskFormSchema),
     mode: "onTouched",
   });
   const { fields, append, remove } = useFieldArray({
@@ -164,10 +164,18 @@ export const AddTaskForm = ({
                   placeholder="eg.Make Coffee"
                   {...register(`subtasks.${index}.name` as const)}
                   defaultValue={field.name}
+                  error={!!(errors.subtasks && errors.subtasks[index])}
+                  helperText={
+                    (errors.subtasks &&
+                      errors.subtasks[index]?.name?.message) ??
+                    ""
+                  }
                 />
-                <Box onClick={() => remove(index)} sx={{ cursor: "pointer" }}>
-                  <CloseIcon />
-                </Box>
+                {index > 0 && (
+                  <Box onClick={() => remove(index)} sx={{ cursor: "pointer" }}>
+                    <CloseIcon />
+                  </Box>
+                )}
               </Box>
             ))}
             <Button
@@ -177,7 +185,7 @@ export const AddTaskForm = ({
               sx={{
                 borderRadius: "20px",
                 marginTop: "10px",
-                color: "text.secondary",
+                backgroundColor: "text.secondary",
               }}
             >
               +Add New Subtask
@@ -210,7 +218,7 @@ export const AddTaskForm = ({
             color="primary"
             sx={{ borderRadius: "20px", margin: "0 10px" }}
           >
-            Create Task
+            {taskId ? "Update Task" : "Create Task"}
           </Button>
         </Stack>
       </form>

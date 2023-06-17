@@ -5,13 +5,13 @@ import { Box } from "@mui/material";
 
 //local imports
 import TaskList from "../TaskList";
-import { Task } from "../TaskList/TaskList.types";
 import { ColorMap } from "./ProgressList.types";
 
 import {
   ProgressListContainer,
   Progress,
   ColorCircle,
+  NewColumn,
 } from "./ProgressList.styles";
 import { selectColumnsByBoardId } from "redux/kanban/kanbanSelectors";
 
@@ -49,6 +49,7 @@ const ProgressList = () => {
           <TaskList columnId={column.id} />
         </Box>
       ))}
+      <NewColumn>+New Column</NewColumn>
     </ProgressListContainer>
   );
 };

@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userSlice";
 import kanbanReducer from "./kanban/kanbanSlice";
+import sidebarReducer from "./sidebar/sidebarSlice";
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     kanban: kanbanReducer,
+    sidebar: sidebarReducer,
   },
 });
 

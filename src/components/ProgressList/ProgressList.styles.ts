@@ -6,7 +6,6 @@ export const ProgressListContainer = styled(Box)({
   flexWrap: "nowrap",
   gap: "10px",
   width: "100%",
-  margin: "10px",
   boxSizing: "border-box",
 });
 
@@ -25,4 +24,18 @@ export const ColorCircle = styled("div", {
   width: "10px",
   height: "10px",
   borderRadius: "50%",
+}));
+
+export const NewColumn = styled(Box)(({ theme }) => ({
+  minWidth: "300px",
+  height: "calc(100vh - 64px)",
+  backgroundColor: theme.palette.background.default,
+  borderRadius: "10px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  margin: "22px 10px 0 0",
+  cursor: "pointer",
+  color: theme.palette.text.primary,
+  fontSize: "18px",
 }));

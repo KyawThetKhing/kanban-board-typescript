@@ -9,7 +9,7 @@ export const Container = styled("div")(({ theme }) => ({
   flexDirection: "column",
   justifyContent: "space-between",
   gap: "10px",
-  padding: 0,
+  padding: "15px 0",
 }));
 
 export const RouteContainer = styled("div")(({ theme }) => ({
@@ -57,5 +57,14 @@ export const SidebarToggle = styled("div")(({ theme }) => ({
   gap: "10px",
   width: "100%",
   marginTop: "20px",
+  cursor: "pointer",
+}));
+
+export const NewBoardContainer = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  gap: "10px",
+  padding: "10px",
+  color: "#635fc7",
   cursor: "pointer",
 }));

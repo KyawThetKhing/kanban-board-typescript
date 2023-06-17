@@ -5,6 +5,15 @@ export const selectKanbanBoards = (state: any) =>
     (id: string) => state.kanban.kanbanBoards.byId[id]
   );
 
+//Get All KanBans
+export const selectKanbanBoardById = (id: string) =>
+  createSelector(
+    [(state: any) => state.kanban.kanbanBoards.byId],
+    (kanbanBoards) => {
+      return kanbanBoards[id];
+    }
+  );
+
 //Get columns by board Id
 export const selectColumnsByBoardId = (boardId: string) =>
   createSelector(

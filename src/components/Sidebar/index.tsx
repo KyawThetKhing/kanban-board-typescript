@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { Box } from "@mui/system";
-import { Switch, Typography } from "@mui/material";
+import { Box, Switch, Typography, Dialog, DialogContent } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 //local imports
+import { useCustomTheme, useThemeUpdate } from "./../../theme";
+import { BoardForm } from "../BoardForm";
 import { selectKanbanBoards } from "redux/kanban/kanbanSelectors";
 
 import { ReactComponent as DarkLogoIcon } from "assets/logo-dark.svg";
 import { ReactComponent as LightLogoIcon } from "assets/logo-light.svg";
-import { ReactComponent as SidebarIcon } from "assets/icon-board.svg";
+import { ReactComponent as BoardIcon } from "assets/icon-board.svg";
 import { ReactComponent as DarkThemeIcon } from "assets/icon-dark-theme.svg";
 import { ReactComponent as LightThemeIcon } from "assets/icon-light-theme.svg";
 import { ReactComponent as HideSidebarIcon } from "assets/icon-hide-sidebar.svg";
@@ -23,16 +24,18 @@ import {
   Footer,
   ThemeContainer,
   SidebarToggle,
+  NewBoardContainer,
 } from "./Sidebar.styles";
-import { useCustomTheme, useThemeUpdate } from "./../../theme";
 
-const Sidebar = () => {
+const Sidebar = ({ toggleDrawer }: { toggleDrawer: () => void }) => {
   const theme = useCustomTheme();
   const toggleMode = useThemeUpdate();
   const kanbanBoards = useSelector(selectKanbanBoards);
+  const [openAddBoardFormDialog, setOpenAddBoardFormDialog] =
+    useState<boolean>(false);
 
-  console.log("Kanboards", kanbanBoards);
-
+  const handleAddBoardFormDialogOpen = () => setOpenAddBoardFormDialog(true);
+  const handleAddBoardFormDialogClose = () => setOpenAddBoardFormDialog(false);
   return (
     <Container>
       <RouteContainer>
@@ -55,6 +58,7 @@ const Sidebar = () => {
                 to={`kanban/${kanban.id}`}
                 style={({ isActive }) => {
                   return {
+                    width: "90%",
                     display: "flex",
                     justifyContent: "flex-start",
                     alignItems: "center",
@@ -68,7 +72,7 @@ const Sidebar = () => {
                   };
                 }}
               >
-                <SidebarIcon />
+                <BoardIcon fill="#828FA3" />
                 <Box
                   sx={{
                     color: "text.primary",
@@ -79,63 +83,10 @@ const Sidebar = () => {
               </NavLink>
             </List>
           ))}
-
-          {/* <List>
-            <NavLink
-              to="/marketing-plan"
-              style={({ isActive }) => {
-                return {
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  gap: "10px",
-                  textDecoration: "none",
-                  borderTopRightRadius: "20px",
-                  padding: "10px",
-                  borderBottomRightRadius: "20px",
-                  fontWeight: isActive ? "bold" : "",
-                  backgroundColor: isActive ? "#635fc7" : "inherit",
-                };
-              }}
-            >
-              <SidebarIcon />
-              <Box
-                sx={{
-                  color: "text.primary",
-                }}
-              >
-                Marketing Plan
-              </Box>
-            </NavLink>
-          </List>
-          <List>
-            <NavLink
-              to="/roadmap"
-              style={({ isActive }) => {
-                return {
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  gap: "10px",
-                  textDecoration: "none",
-                  borderTopRightRadius: "20px",
-                  padding: "10px",
-                  borderBottomRightRadius: "20px",
-                  fontWeight: isActive ? "bold" : "",
-                  backgroundColor: isActive ? "#635fc7" : "inherit",
-                };
-              }}
-            >
-              <SidebarIcon />
-              <Box
-                sx={{
-                  color: "text.primary",
-                }}
-              >
-                Roadmap
-              </Box>
-            </NavLink>
-          </List> */}
+          <NewBoardContainer onClick={handleAddBoardFormDialogOpen}>
+            <BoardIcon fill="#635fc7" />
+            <Box>+ Create New Board</Box>
+          </NewBoardContainer>
         </ListContainer>
       </RouteContainer>
       <Footer>
@@ -149,11 +100,23 @@ const Sidebar = () => {
           />
           <DarkThemeIcon />
         </ThemeContainer>
-        <SidebarToggle>
+        <SidebarToggle onClick={toggleDrawer}>
           <HideSidebarIcon />
           <Typography>Hide Sidebar</Typography>
         </SidebarToggle>
       </Footer>
+
+      {/**Add Board Form Dailog */}
+      <Dialog
+        onClose={handleAddBoardFormDialogClose}
+        open={openAddBoardFormDialog}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogContent>
+          <BoardForm handleClose={handleAddBoardFormDialogClose} />
+        </DialogContent>
+      </Dialog>
     </Container>
   );
 };

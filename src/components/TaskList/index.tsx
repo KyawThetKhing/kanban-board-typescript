@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Box, Menu, MenuItem, Dialog, DialogContent } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 //local imports
 import { selectTasksByColumnId } from "redux/kanban/kanbanSelectors";
 import { TaskListContainer, TaskWrapper } from "./TaskList.styles";
 import { ITask } from "redux/kanban/kanban.types";
-import { AddTaskForm } from "../AddTaskForm";
+import { AddTaskForm } from "../TaskForm";
 import { ViewTaskDetail } from "../ViewTaskDetail";
+import { deleteTask } from "redux/kanban/kanbanSlice";
+import WarningDialog from "../WarningDialog";
 
 const TaskList = ({ columnId }: { columnId: string | null }) => {
   console.log("Column ID", columnId);
@@ -26,6 +28,17 @@ const TaskList = ({ columnId }: { columnId: string | null }) => {
   const handleViewOpen = () => setOpenViewDialog(true);
   const handleViewClose = () => setOpenViewDialog(false);
 
+  const [openWarningDailog, setOpenWarningDialog] = useState<boolean>(false);
+  const [taskIdForWarning, setTaskIdForWarning] = useState<string>("");
+  const handleWarningOpen = (taskId: string) => {
+    setTaskIdForWarning(taskId);
+    setOpenWarningDialog(true);
+    setAnchorEl(null);
+  };
+  const handleWarningClose = () => setOpenWarningDialog(false);
+
+  const dispatch = useDispatch();
+
   const handleClick = (event: React.MouseEvent<any>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -41,6 +54,13 @@ const TaskList = ({ columnId }: { columnId: string | null }) => {
     setTaskId(taskId);
     handleEditOpen();
     setAnchorEl(null);
+  };
+
+  const handleDeleteTask = () => {
+    console.log("Warning Task Id", taskIdForWarning);
+    if (!taskIdForWarning) return;
+    dispatch(deleteTask(taskIdForWarning));
+    setOpenWarningDialog(false);
   };
 
   return (
@@ -73,6 +93,9 @@ const TaskList = ({ columnId }: { columnId: string | null }) => {
           >
             <MenuItem onClick={() => handleViewTask(task)}>View</MenuItem>
             <MenuItem onClick={() => handleEditTask(task.id)}>Edit</MenuItem>
+            <MenuItem onClick={() => handleWarningOpen(task.id)}>
+              Delete
+            </MenuItem>
           </Menu>
         </TaskWrapper>
       ))}
@@ -99,6 +122,17 @@ const TaskList = ({ columnId }: { columnId: string | null }) => {
           <ViewTaskDetail handleClose={handleViewClose} task={task} />
         </DialogContent>
       </Dialog>
+
+      {/**Warning Dialog */}
+      <WarningDialog
+        openDialog={openWarningDailog}
+        title="Delete this task?"
+        description="Are you sure you want to delete the ‘Build settings UI’ task and its subtasks? This action cannot be reversed."
+        cancelBtnText="Cancel"
+        confirmBtnText="Delete"
+        handleConfirm={handleDeleteTask}
+        handleCancel={handleWarningClose}
+      />
     </TaskListContainer>
   );
 };
