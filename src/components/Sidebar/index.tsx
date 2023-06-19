@@ -27,14 +27,23 @@ import {
   NewBoardContainer,
 } from "./Sidebar.styles";
 
-const Sidebar = ({ toggleDrawer }: { toggleDrawer: () => void }) => {
+const Sidebar = ({
+  toggleDrawer,
+  toggleDrawerMobile,
+}: {
+  toggleDrawer: () => void;
+  toggleDrawerMobile: () => void;
+}) => {
   const theme = useCustomTheme();
   const toggleMode = useThemeUpdate();
   const kanbanBoards = useSelector(selectKanbanBoards);
   const [openAddBoardFormDialog, setOpenAddBoardFormDialog] =
     useState<boolean>(false);
 
-  const handleAddBoardFormDialogOpen = () => setOpenAddBoardFormDialog(true);
+  const handleAddBoardFormDialogOpen = () => {
+    toggleDrawerMobile();
+    setOpenAddBoardFormDialog(true);
+  };
   const handleAddBoardFormDialogClose = () => setOpenAddBoardFormDialog(false);
   return (
     <Container>
@@ -53,7 +62,7 @@ const Sidebar = ({ toggleDrawer }: { toggleDrawer: () => void }) => {
         <RouteTitle>All Board(3)</RouteTitle>
         <ListContainer>
           {kanbanBoards.map((kanban: any) => (
-            <List key={kanban.id}>
+            <List key={kanban.id} onClick={toggleDrawerMobile}>
               <NavLink
                 to={`kanban/${kanban.id}`}
                 style={({ isActive }) => {
