@@ -63,7 +63,7 @@ export default function WarningDialog({
           <DialogContentText
             id="alert-dialog-description"
             sx={{
-              color: "#e4ebfa",
+              color: "text.primary",
             }}
           >
             {description}
@@ -86,6 +86,10 @@ export default function WarningDialog({
               color: "#ffffff",
               fontWeight: 600,
               borderRadius: "20px",
+              "&:hover": {
+                backgroundColor: "error.main",
+                opacity: "0.6",
+              },
             }}
           >
             {confirmBtnText}
@@ -98,6 +102,10 @@ export default function WarningDialog({
               color: "text.main",
               backgroundColor: "text.disabled",
               fontWeight: 600,
+              "&:hover": {
+                backgroundColor: "text.disabled",
+                opacity: "0.6",
+              },
             }}
           >
             {cancelBtnText}

@@ -6,6 +6,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+## Demo
+
+[Kanban Demo Link](https://ktk-kanban-board.netlify.app/)
+
 ### `npm start`
 
 Runs the app in the development mode.\
