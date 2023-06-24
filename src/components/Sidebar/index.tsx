@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 //local imports
-import { useCustomTheme, useThemeUpdate } from "./../../theme";
+import { useCustomTheme, useThemeUpdate } from "../../theme/theme";
 import { BoardForm } from "../BoardForm";
 import { selectKanbanBoards } from "redux/kanban/kanbanSelectors";
 
@@ -59,7 +59,7 @@ const Sidebar = ({
             <DarkLogoIcon />
           )}
         </Box>
-        <RouteTitle>All Board(3)</RouteTitle>
+        <RouteTitle>All Board ({kanbanBoards.length})</RouteTitle>
         <ListContainer>
           {kanbanBoards.map((kanban: any) => (
             <List key={kanban.id} onClick={toggleDrawerMobile}>
@@ -78,13 +78,14 @@ const Sidebar = ({
                     borderBottomRightRadius: "20px",
                     fontWeight: isActive ? "bold" : "",
                     backgroundColor: isActive ? "#635fc7" : "inherit",
+                    color: isActive ? "white" : "#828fa3",
                   };
                 }}
               >
                 <BoardIcon fill="#828FA3" />
                 <Box
                   sx={{
-                    color: "text.primary",
+                    color: "inherit",
                   }}
                 >
                   {kanban.title}

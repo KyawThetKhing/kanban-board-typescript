@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export const Container = styled("div")(({ theme }) => ({
@@ -18,8 +17,11 @@ export const RouteContainer = styled("div")(({ theme }) => ({
 }));
 
 export const RouteTitle = styled("div")(({ theme }) => ({
-  color: theme.palette.text.primary,
+  color: theme.palette.grey[500],
   padding: "10px",
+  fontSize: "14px",
+  fontWeight: "600px",
+  textTransform: "uppercase",
 }));
 
 export const ListContainer = styled("ul")(({ theme }) => ({
@@ -33,6 +35,7 @@ export const ListContainer = styled("ul")(({ theme }) => ({
 export const List = styled("li")(({ theme }) => ({
   listStyle: "none",
   width: "100%",
+  color: theme.palette.common.white,
 }));
 
 export const Footer = styled("div")(({ theme }) => ({
@@ -47,7 +50,7 @@ export const ThemeContainer = styled("div")(({ theme }) => ({
   width: "100%",
   padding: "5px 10px",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: theme.palette.secondary.main,
+  backgroundColor: theme.palette.background.paper,
 }));
 
 export const SidebarToggle = styled("div")(({ theme }) => ({
@@ -65,6 +68,6 @@ export const NewBoardContainer = styled("div")(({ theme }) => ({
   alignItems: "center",
   gap: "10px",
   padding: "10px",
-  color: "#635fc7",
+  color: theme.palette.primary.main,
   cursor: "pointer",
 }));

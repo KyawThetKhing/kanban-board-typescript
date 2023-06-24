@@ -7,7 +7,9 @@ export interface ITask {
 }
 
 export interface ISubTask {
+  id: string;
   name: string;
+  status: "Done" | "Not Done";
 }
 
 export interface IColumn {

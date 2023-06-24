@@ -6,6 +6,7 @@ export const ProgressListContainer = styled(Box)({
   flexWrap: "nowrap",
   gap: "10px",
   width: "100%",
+  height: "calc(100vh - 64px)",
   boxSizing: "border-box",
 });
 

@@ -9,11 +9,29 @@ export const TaskListContainer = styled(Box)(({ theme }) => ({
   height: "100%",
 }));
 
-export const TaskWrapper = styled(Box)(({ theme }) => ({
-  padding: "10px",
-  borderRadius: theme.shape.borderRadius,
-  boxShadow: theme.shadows[1],
-  backgroundColor: theme.palette.background.default,
-  cursor: "pointer",
-  position: "relative",
+export const TaskWrapper = styled(Box, {
+  shouldForwardProp: (prop) =>
+    prop !== "isDragging" && prop !== "isDraggingOver",
+})<{ isDragging: boolean; isDraggingOver: boolean }>(
+  ({ theme, isDragging, isDraggingOver }) => ({
+    padding: "10px",
+    borderRadius: theme.shape.borderRadius,
+    boxShadow: theme.shadows[1],
+    userSelect: "none",
+    minHeight: "50px",
+    position: "relative",
+    backgroundColor:
+      isDragging || isDraggingOver
+        ? theme.palette.background.paper
+        : theme.palette.background.default,
+  })
+);
+
+export const TaskTitle = styled(Box)(({ theme }) => ({
+  width: "90%",
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  fontSize: "18px",
+  fontWeight: theme.typography.fontWeightBold,
 }));

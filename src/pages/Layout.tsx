@@ -5,7 +5,7 @@ import { AppBar, Box, CssBaseline, Drawer, Toolbar } from "@mui/material";
 import Sidebar from "components/Sidebar";
 import Topbar from "components/Topbar";
 import { ReactComponent as ShowSidebarIcon } from "assets/icon-show-sidebar.svg";
-import { ToggleSideBarWrapper } from "./Layout.styles";
+import { Main, ToggleSideBarWrapper } from "./Layout.styles";
 
 const mobileDrawerWidth = 240;
 
@@ -92,10 +92,13 @@ export default function Layout(props: Props) {
           variant="persistent"
           sx={{
             display: { xs: "none", md: "block" },
+            width: drawerWidth,
+            flexShrink: 0,
             "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
               width: drawerWidth,
+              boxSizing: "border-box",
             },
+            transform: "theme.transi",
           }}
           open={desktopOpen}
         >
@@ -105,19 +108,11 @@ export default function Layout(props: Props) {
           />
         </Drawer>
       </Box>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: { md: 1, xs: "20px 5px" },
-          backgroundColor: "background.paper",
-          ml: { md: `${drawerWidth}px` },
-          overflowX: "auto",
-        }}
-      >
+      <Main component="main" drawerWidth={drawerWidth}>
         <Toolbar />
         <Outlet />
-      </Box>
+      </Main>
+
       {!desktopOpen && (
         <ToggleSideBarWrapper onClick={handleDesktopDrawerShow}>
           <ShowSidebarIcon fill="#ffffff" />

@@ -1,5 +1,3 @@
-import React from "react";
-
 import ProgressList from "components/ProgressList";
 import { PlaformLaunchContainer } from "./PlatformLaunch.styles";
 

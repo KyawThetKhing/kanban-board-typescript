@@ -1,24 +1,55 @@
 import React from "react";
 import { Stack, Box, Checkbox, TextField, MenuItem } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //local imports
-import { ITask } from "redux/kanban/kanban.types";
-import { selectColumnsByBoardId } from "redux/kanban/kanbanSelectors";
+import {
+  selectColumnsByBoardId,
+  selectTaskByTaskId,
+} from "redux/kanban/kanbanSelectors";
 import { SubTaskWrapper, SubTask, DetailTitle } from "./ViewTaskDetail.styles";
+import { editTask } from "redux/kanban/kanbanSlice";
 
 export const ViewTaskDetail = ({
   handleClose,
-  task,
+  taskId,
 }: {
   handleClose: () => void;
-  task: ITask | null;
+  taskId: string | null;
 }) => {
   const { kanbanId } = useParams();
 
   const columns = useSelector(selectColumnsByBoardId(kanbanId ? kanbanId : ""));
-  console.log("Task Deaitlal", task);
+  const task = useSelector(selectTaskByTaskId(taskId ? taskId : ""));
+  const dispatch = useDispatch();
+
+  const onSubTaskUpdate = (subtaskId: any) => {
+    if (!task) return;
+    const updateSubTasks = task.subtasks.map((item: any) => {
+      if (item.id === subtaskId) {
+        return {
+          ...item,
+          status: item.status === "Done" ? "Not Done" : "Done",
+        };
+      }
+      return item;
+    });
+    const updatedTask = {
+      task: { ...task, subtasks: updateSubTasks },
+    };
+    dispatch(editTask(updatedTask));
+  };
+
+  // const onStatusUpdate = (column: any) => {
+  //   const updatedTask = {
+  //     task: {
+  //       ...task,
+  //       status: column.title,
+  //     },
+  //   };
+  //   dispatch(editTask(updatedTask));
+  // };
 
   if (!task) return <Stack>There is no task detail</Stack>;
   return (
@@ -31,10 +62,20 @@ export const ViewTaskDetail = ({
         <Box mb={1}>Sub task ({task.subtasks.length})</Box>
         <SubTaskWrapper>
           {task.subtasks &&
-            task.subtasks.map((task, index) => (
-              <SubTask key={index}>
-                <Checkbox defaultChecked />
-                <Box>{task.name}</Box>
+            task.subtasks.map((subtask: any) => (
+              <SubTask key={subtask.id}>
+                <Checkbox
+                  checked={subtask.status === "Done"}
+                  onClick={() => onSubTaskUpdate(subtask.id)}
+                />
+                <Box
+                  sx={{
+                    textDecoration:
+                      subtask.status === "Done" ? "line-through" : "none",
+                  }}
+                >
+                  {subtask.name}
+                </Box>
               </SubTask>
             ))}
         </SubTaskWrapper>
@@ -49,12 +90,13 @@ export const ViewTaskDetail = ({
           variant="outlined"
           defaultValue={task.status}
           disabled
-          sx={{
-            color: "theme.palette.text.primary",
-          }}
         >
           {columns.map((column: any) => (
-            <MenuItem key={column.id} value={column.title}>
+            <MenuItem
+              key={column.id}
+              value={column.title}
+              // onClick={() => onStatusUpdate(column)}
+            >
               {column.title}
             </MenuItem>
           ))}

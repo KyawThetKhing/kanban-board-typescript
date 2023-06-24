@@ -3,7 +3,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { RouterProvider } from "react-router-dom";
 
 //local imports
-import { CustomThemeProvider } from "./theme";
+import { CustomThemeProvider } from "theme/theme";
 import store from "redux/store";
 import { router } from "./routes";
 import "./App.css";

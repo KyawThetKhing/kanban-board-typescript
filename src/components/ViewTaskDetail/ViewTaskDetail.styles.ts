@@ -1,4 +1,4 @@
-import { styled, alpha } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 
 export const DetailTitle = styled("h3")(({ theme }) => ({
   color: theme.palette.text.primary,

@@ -35,7 +35,6 @@ api.interceptors.response.use((response: any) => {
 
 const http = {
   get: (url: string, config: any) => {
-    console.log("Url", url, config);
     return api.get(url, {
       headers: {
         ...defaultHeaders,
@@ -44,7 +43,6 @@ const http = {
     });
   },
   post: (url: string, body: any, config?: any) => {
-    console.log("Url", url, body);
     return api.post(url, body, {
       headers: {
         ...defaultHeaders,

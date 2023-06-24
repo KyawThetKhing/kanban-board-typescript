@@ -1,10 +1,15 @@
 import { useState } from "react";
-import { Dialog, DialogContent, Button, Box } from "@mui/material";
+import { Dialog, DialogContent, Box } from "@mui/material";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 //local imports
-import { TopbarTitle, TopbarContainer } from "./Topbar.styles";
+import {
+  TopbarTitle,
+  TopbarContainer,
+  AddTaskBtn,
+  AddTaskBtnMobile,
+} from "./Topbar.styles";
 import { AddTaskForm } from "../TaskForm";
 import { selectKanbanBoardById } from "redux/kanban/kanbanSelectors";
 import { ReactComponent as Logo } from "assets/logo-mobile.svg";
@@ -30,29 +35,13 @@ const Topbar = ({ toggleDrawer }: { toggleDrawer?: () => void }) => {
         </Box>
         <TopbarTitle variant="h5">{kanbanDetail?.title}</TopbarTitle>
       </Box>
-      <Button
-        onClick={handleOpen}
-        variant="contained"
-        color="primary"
-        sx={{
-          borderRadius: "20px",
-          display: { sm: "block", xs: "none" },
-        }}
-      >
+      <AddTaskBtn onClick={handleOpen} variant="contained">
         + Add New Task
-      </Button>
+      </AddTaskBtn>
 
-      <Button
-        onClick={handleOpen}
-        variant="contained"
-        color="primary"
-        sx={{
-          borderRadius: "20px",
-          display: { sm: "none", xs: "block" },
-        }}
-      >
+      <AddTaskBtnMobile onClick={handleOpen} variant="contained">
         +
-      </Button>
+      </AddTaskBtnMobile>
 
       {/**Add Task Modal */}
       <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>

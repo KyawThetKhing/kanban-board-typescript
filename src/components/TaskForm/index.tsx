@@ -68,7 +68,6 @@ export const AddTaskForm = ({
 
   useEffect(() => {
     if (taskId && taskDetail) {
-      console.log("Task Detail", taskDetail);
       setValue("title", taskDetail.title);
       setValue("description", taskDetail.description);
       setValue("status", taskDetail.status);
@@ -78,24 +77,25 @@ export const AddTaskForm = ({
   }, [taskId, taskDetail]);
 
   const onSubmit = (data: FormValues) => {
-    console.log("Form Data", data);
     const column = columns.filter(
       (column: any) => column.title === data.status
     );
-    console.log("Column", column);
     const id = taskId ? taskDetail.id : "task-" + uuidv4();
+    const subtasksWithId = data.subtasks.map((subtask) => ({
+      ...subtask,
+      id: "subtask-" + uuidv4(),
+    }));
     const payload = {
       columnId: column[0].id,
       task: {
         id: id,
         title: data.title,
         description: data.description,
-        subtasks: data.subtasks,
+        subtasks: subtasksWithId,
         status: data.status,
       },
     };
 
-    console.log("Payload Data", payload);
     if (taskId) {
       dispatch(editTask(payload));
     } else {
@@ -105,7 +105,6 @@ export const AddTaskForm = ({
     handleClose();
   };
 
-  console.log("Task Id", taskId);
   return (
     <Stack spacing={2}>
       <h4>{taskId ? "Edit Task" : "Add New Task"}</h4>
@@ -185,7 +184,12 @@ export const AddTaskForm = ({
               sx={{
                 borderRadius: "20px",
                 marginTop: "10px",
-                backgroundColor: "text.secondary",
+                backgroundColor: "secondary.main",
+                color: "common.white",
+                "&:hover": {
+                  backgroundColor: "secondary.dark",
+                  color: "common.white",
+                },
               }}
             >
               +Add New Subtask
@@ -203,6 +207,7 @@ export const AddTaskForm = ({
               {...register("status")}
               error={!!errors.status}
               helperText={errors.status?.message}
+              defaultValue={taskDetail?.status}
             >
               {columns.map((column: any) => (
                 <MenuItem key={column.id} value={column.title}>
