@@ -6,7 +6,6 @@ import { RouterProvider } from "react-router-dom";
 import { CustomThemeProvider } from "theme/theme";
 import store from "redux/store";
 import { router } from "./routes";
-import "./App.css";
 
 function App() {
   return (

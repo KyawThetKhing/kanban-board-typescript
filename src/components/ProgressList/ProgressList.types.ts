@@ -1,3 +1,3 @@
-export interface ColorMap {
+export type ColorMap = {
   [key: string]: string;
 }

@@ -26,14 +26,12 @@ import {
   SidebarToggle,
   NewBoardContainer,
 } from "./Sidebar.styles";
+import { SidebarProps } from "./Sidebar.types";
 
 const Sidebar = ({
   toggleDrawer,
   toggleDrawerMobile,
-}: {
-  toggleDrawer: () => void;
-  toggleDrawerMobile: () => void;
-}) => {
+}: SidebarProps) => {
   const theme = useCustomTheme();
   const toggleMode = useThemeUpdate();
   const kanbanBoards = useSelector(selectKanbanBoards);

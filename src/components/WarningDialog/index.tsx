@@ -5,6 +5,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { WarningDialogProps } from "./WarningDialog.types";
 
 export default function WarningDialog({
   openDialog,
@@ -14,15 +15,7 @@ export default function WarningDialog({
   confirmBtnText,
   handleCancel,
   handleConfirm,
-}: {
-  openDialog: boolean;
-  title: string;
-  description: string;
-  cancelBtnText: string;
-  confirmBtnText: string;
-  handleCancel: () => void;
-  handleConfirm: () => void;
-}) {
+}: WarningDialogProps) {
   // const [open, setOpen] = React.useState(openDialog);
 
   // const onCancel = () => {

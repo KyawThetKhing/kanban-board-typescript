@@ -16,15 +16,7 @@ import {
   selectColumnsByBoardId,
   selectTaskByTaskId,
 } from "redux/kanban/kanbanSelectors";
-
-type FormValues = {
-  title: string;
-  description: string;
-  subtasks: {
-    name: string;
-  }[];
-  status: string;
-};
+import { FormValues, TaskFormProps } from "./TaskForm.types";
 
 const initailValues = {
   title: "",
@@ -40,10 +32,7 @@ const initailValues = {
 export const AddTaskForm = ({
   handleClose,
   taskId,
-}: {
-  handleClose: () => void;
-  taskId?: string;
-}) => {
+}: TaskFormProps) => {
   const {
     register,
     formState: { errors },

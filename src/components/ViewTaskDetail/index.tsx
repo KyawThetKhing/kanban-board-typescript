@@ -10,14 +10,11 @@ import {
 } from "redux/kanban/kanbanSelectors";
 import { SubTaskWrapper, SubTask, DetailTitle } from "./ViewTaskDetail.styles";
 import { editTask } from "redux/kanban/kanbanSlice";
+import { ViewTaskDetailProps } from "./ViewTaskDetail.types";
 
 export const ViewTaskDetail = ({
-  handleClose,
   taskId,
-}: {
-  handleClose: () => void;
-  taskId: string | null;
-}) => {
+}: ViewTaskDetailProps) => {
   const { kanbanId } = useParams();
 
   const columns = useSelector(selectColumnsByBoardId(kanbanId ? kanbanId : ""));

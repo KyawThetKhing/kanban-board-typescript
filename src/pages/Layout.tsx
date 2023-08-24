@@ -8,12 +8,10 @@ import { ReactComponent as ShowSidebarIcon } from "assets/icon-show-sidebar.svg"
 import { Main, ToggleSideBarWrapper } from "./Layout.styles";
 
 const mobileDrawerWidth = 240;
-
-interface Props {
+type LayoutProps = {
   window?: () => Window;
 }
-
-export default function Layout(props: Props) {
+export default function Layout(props: LayoutProps) {
   const { window } = props;
   const [drawerWidth, setDrawerWidth] = React.useState<number>(240);
   const [mobileOpen, setMobileOpen] = React.useState<boolean>(false);

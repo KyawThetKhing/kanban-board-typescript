@@ -12,14 +12,12 @@ import { AddTaskForm } from "../TaskForm";
 import { ViewTaskDetail } from "../ViewTaskDetail";
 import { deleteTask } from "redux/kanban/kanbanSlice";
 import WarningDialog from "../WarningDialog";
+import { TaskListProps } from "./TaskList.types";
 
 const TaskList = ({
   columnId,
   isDraggingOver,
-}: {
-  columnId: string | null;
-  isDraggingOver: boolean;
-}) => {
+}: TaskListProps) => {
   const taskList = useSelector(selectTasksByColumnId(columnId || ""));
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -150,7 +148,7 @@ const TaskList = ({
         fullWidth
       >
         <DialogContent>
-          <ViewTaskDetail handleClose={handleViewClose} taskId={viewTaskId} />
+          <ViewTaskDetail taskId={viewTaskId} />
         </DialogContent>
       </Dialog>
 

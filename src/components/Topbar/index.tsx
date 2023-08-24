@@ -13,9 +13,11 @@ import {
 import { AddTaskForm } from "../TaskForm";
 import { selectKanbanBoardById } from "redux/kanban/kanbanSelectors";
 import { ReactComponent as Logo } from "assets/logo-mobile.svg";
+import { TopbarProps } from "./Topbar.types";
 
-const Topbar = ({ toggleDrawer }: { toggleDrawer?: () => void }) => {
+const Topbar = ({ toggleDrawer }: TopbarProps) => {
   const [open, setOpen] = useState<boolean>(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { kanbanId } = useParams();

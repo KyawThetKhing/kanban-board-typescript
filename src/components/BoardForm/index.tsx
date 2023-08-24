@@ -9,20 +9,13 @@ import { v4 as uuidv4 } from "uuid";
 //local imports
 import boardFormSchema from "schema/boardFormSchema";
 import { addColumn, addKanbanBoard } from "redux/kanban/kanbanSlice";
+import { BoardFormProps, FormValues } from "./BoardForm.types";
 
-type FormValues = {
-  title: string;
-  columns: {
-    name: string;
-  }[];
-};
+
 export const BoardForm = ({
   boardId,
   handleClose,
-}: {
-  boardId?: string;
-  handleClose: () => void;
-}) => {
+}: BoardFormProps) => {
   const {
     register,
     handleSubmit,
